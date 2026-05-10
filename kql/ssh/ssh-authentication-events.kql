@@ -1,0 +1,16 @@
+// SSH Authentication Events
+// Purpose: View SSH authentication activity collected from the Debian honeypot.
+// Data source: Syslog table populated by Syslog via AMA.
+
+Syslog
+| where TimeGenerated > ago(30d)
+| where ProcessName has "sshd"
+| where SyslogMessage has_any (
+    "Invalid user",
+    "Connection closed by invalid user",
+    "Connection reset by invalid user",
+    "Failed password",
+    "Accepted publickey"
+)
+| project TimeGenerated, Computer, HostName, ProcessName, SyslogMessage
+| sort by TimeGenerated desc

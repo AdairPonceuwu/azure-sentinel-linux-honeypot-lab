@@ -1,0 +1,20 @@
+// SSH Attacker IP Summary
+// Purpose: Extract source IP addresses from sshd Syslog messages and summarize attempts by IP.
+// Data source: Syslog table populated by Syslog via AMA.
+
+Syslog
+| where TimeGenerated > ago(30d)
+| where ProcessName has "sshd"
+| where SyslogMessage has_any (
+    "Invalid user",
+    "Connection closed by invalid user",
+    "Connection reset by invalid user",
+    "Failed password"
+)
+| extend AttackerIp = coalesce(
+    extract(@"from\s+((?:\d{1,3}\.){3}\d{1,3})", 1, SyslogMessage),
+    extract(@"invalid user\s+\S+\s+((?:\d{1,3}\.){3}\d{1,3})\s+port", 1, SyslogMessage)
+)
+| where isnotempty(AttackerIp)
+| summarize Attempts=count() by AttackerIp
+| sort by Attempts desc

@@ -1,0 +1,32 @@
+// SSH GeoIP Attack Map Query
+// Purpose: Extract SSH attacker IPs, enrich them with geolocation data, and prepare output for a Sentinel Workbook map.
+// Data source: Syslog table populated by Syslog via AMA.
+// Note: This version does not require a Sentinel Watchlist. It uses geo_info_from_ip_address() directly in KQL.
+
+Syslog
+| where TimeGenerated > ago(30d)
+| where ProcessName has "sshd"
+| where SyslogMessage has_any (
+    "Invalid user",
+    "Connection closed by invalid user",
+    "Connection reset by invalid user",
+    "Failed password"
+)
+| extend AttackerIp = coalesce(
+    extract(@"from\s+((?:\d{1,3}\.){3}\d{1,3})", 1, SyslogMessage),
+    extract(@"invalid user\s+\S+\s+((?:\d{1,3}\.){3}\d{1,3})\s+port", 1, SyslogMessage)
+)
+| where isnotempty(AttackerIp)
+| extend geo = geo_info_from_ip_address(AttackerIp)
+| extend
+    country = tostring(geo.country),
+    state = tostring(geo.state),
+    city = tostring(geo.city),
+    latitude = todouble(geo.latitude),
+    longitude = todouble(geo.longitude)
+| where isnotempty(latitude) and isnotempty(longitude)
+| summarize FailureCount = count()
+    by AttackerIp, latitude, longitude, city, country
+| extend friendly_location = strcat(city, " (", country, ")")
+| project FailureCount, AttackerIp, latitude, longitude, city, country, friendly_location
+| sort by FailureCount desc
