@@ -1,0 +1,11 @@
+flowchart LR
+    A[Public Internet / Attackers] --> B[Azure Network Security Group<br>Allow TCP/22]
+    B --> C[Debian 12 Honeypot VM<br>OpenSSH Server]
+    C --> D[Linux Syslog<br>sshd Authentication Logs]
+    D --> E[Azure Monitor Agent]
+    E --> F[Data Collection Rule<br>LOG_AUTH / LOG_AUTHPRIV]
+    F --> G[Log Analytics Workspace<br>Syslog Table]
+    G --> H[Microsoft Sentinel]
+    H --> I[KQL Queries]
+    I --> J[GeoIP Enrichment<br>geo_info_from_ip_address]
+    J --> K[Sentinel Workbook<br>SSH Attack Map]
