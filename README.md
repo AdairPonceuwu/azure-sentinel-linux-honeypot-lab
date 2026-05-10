@@ -93,15 +93,13 @@ A Microsoft Sentinel Workbook was created to visualize attacker source locations
 
 ## KQL Queries
 
-The full KQL queries are stored in the `kql/` folder.
+The full KQL queries are stored in the `kql/ssh/` folder.
 
 | Query File | Purpose |
 |---|---|
-| `kql/ssh/ssh-authentication-events.kql` | View SSH authentication events from Syslog |
-| `kql/ssh/ssh-attacker-ip-summary.kql` | Extract and summarize attacker IP addresses |
-| `kql/ssh/ssh-geoip-attack-map.kql` | Enrich attacker IPs with geolocation data for the map |
-| `kql/utilities/syslog-health-check.kql` | Validate Syslog ingestion |
-| `kql/future-detections/` | Placeholder folder for future detection logic |
+| [ssh-authentication-events.kql](kql/ssh/ssh-authentication-events.kql) | View SSH authentication events from Syslog |
+| [ssh-attacker-ip-summary.kql](kql/ssh/ssh-attacker-ip-summary.kql) | Extract and summarize attacker IP addresses |
+| [ssh-geoip-attack-map.kql](kql/ssh/ssh-geoip-attack-map.kql) | Enrich attacker IPs with geolocation data for the attack map |
 
 ## Results
 
