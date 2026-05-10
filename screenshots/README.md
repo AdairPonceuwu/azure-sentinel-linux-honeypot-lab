@@ -29,24 +29,6 @@ Before publishing screenshots, censor or remove sensitive information such as:
 | `11-attacker-ip-summary-kql.png` | KQL query summarizing attacker IP addresses |
 | `12-sentinel-ssh-attack-map.png` | Sentinel Workbook SSH attack map |
 
-## Optional Screenshots
-
-| File Name | Description |
-|---|---|
-| `13-vm-stopped-deallocated.png` | VM stopped and deallocated after data collection |
-| `14-workbook-query-editor.png` | Workbook query editor or advanced editor |
-| `15-syslog-dcr-facilities.png` | DCR Syslog facility configuration using LOG_AUTH and LOG_AUTHPRIV |
-
-## Suggested Order for README
-
-Use only the strongest screenshots in the main `README.md`, such as:
-
-1. `10-sentinel-syslog-query.png`
-2. `11-attacker-ip-summary-kql.png`
-3. `12-sentinel-ssh-attack-map.png`
-
-Keep the rest as supporting evidence in this folder.
-
 ## Notes
 
 Screenshots should support the technical story of the lab:
