@@ -1,0 +1,33 @@
+{
+  "type": 3,
+  "content": {
+    "version": "KqlItem/1.0",
+    "query": "Syslog\n| where TimeGenerated > ago(30d)\n| where ProcessName has \"sshd\"\n| where SyslogMessage has_any (\n    \"Invalid user\",\n    \"Connection closed by invalid user\",\n    \"Connection reset by invalid user\",\n    \"Failed password\"\n)\n| extend AttackerIp = coalesce(\n    extract(@\"from\\s+((?:\\d{1,3}\\.){3}\\d{1,3})\", 1, SyslogMessage),\n    extract(@\"invalid user\\s+\\S+\\s+((?:\\d{1,3}\\.){3}\\d{1,3})\\s+port\", 1, SyslogMessage)\n)\n| where isnotempty(AttackerIp)\n| extend geo = geo_info_from_ip_address(AttackerIp)\n| extend\n    country = tostring(geo.country),\n    state = tostring(geo.state),\n    city = tostring(geo.city),\n    latitude = todouble(geo.latitude),\n    longitude = todouble(geo.longitude)\n| where isnotempty(latitude) and isnotempty(longitude)\n| summarize FailureCount = count()\n    by AttackerIp, latitude, longitude, city, country\n| extend friendly_location = strcat(city, \" (\", country, \")\")\n| project FailureCount, AttackerIp, latitude, longitude, city, country, friendly_location\n| sort by FailureCount desc",
+    "size": 3,
+    "timeContext": {
+      "durationMs": 2592000000
+    },
+    "queryType": 0,
+    "resourceType": "microsoft.operationalinsights/workspaces",
+    "visualization": "map",
+    "mapSettings": {
+      "locInfo": "LatLong",
+      "locInfoColumn": "country",
+      "latitude": "latitude",
+      "longitude": "longitude",
+      "sizeSettings": "FailureCount",
+      "sizeAggregation": "Sum",
+      "opacity": 0.8,
+      "labelSettings": "friendly_location",
+      "legendMetric": "FailureCount",
+      "legendAggregation": "Sum",
+      "itemColorSettings": {
+        "nodeColorField": "FailureCount",
+        "colorAggregation": "Sum",
+        "type": "heatmap",
+        "heatmapPalette": "greenRed"
+      }
+    }
+  },
+  "name": "SSH Honeypot Attack Map"
+}
