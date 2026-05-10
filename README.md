@@ -113,22 +113,20 @@ A Microsoft Sentinel Workbook was created to visualize attacker source locations
 
 Screenshots are stored in the `screenshots/` folder.
 
-Suggested evidence:
-
-| Evidence | File |
+| Evidence | Screenshot |
 |---|---|
-| Resource group | `screenshots/01-resource-group.png` |
-| Debian VM | `screenshots/02-debian-vm-created.png` |
-| NSG SSH rule | `screenshots/03-network-security-group-ssh-rule.png` |
-| SSH service running | `screenshots/04-ssh-service-running.png` |
-| Local SSH logs | `screenshots/05-local-ssh-invalid-user-events.png` |
-| Log Analytics Workspace | `screenshots/06-log-analytics-workspace.png` |
-| Microsoft Sentinel enabled | `screenshots/07-sentinel-enabled.png` |
-| Syslog via AMA connector | `screenshots/08-syslog-via-ama-connector.png` |
-| Data Collection Rule | `screenshots/09-data-collection-rule.png` |
-| Sentinel Syslog query | `screenshots/10-sentinel-syslog-query.png` |
-| Attacker IP summary | `screenshots/11-attacker-ip-summary-kql.png` |
-| Attack map | `screenshots/12-sentinel-ssh-attack-map.png` |
+| Resource group | [01-resource-group.png](screenshots/01-resource-group.png) |
+| Debian VM | [02-debian-vm-created.png](screenshots/02-debian-vm-created.png) |
+| NSG SSH rule | [03-network-security-group-ssh-rule.png](screenshots/03-network-security-group-ssh-rule.png) |
+| SSH service running | [04-ssh-service-running.png](screenshots/04-ssh-service-running.png) |
+| Local SSH logs | [05-local-ssh-invalid-user-events.png](screenshots/05-local-ssh-invalid-user-events.png) |
+| Log Analytics Workspace | [06-log-analytics-workspace.png](screenshots/06-log-analytics-workspace.png) |
+| Microsoft Sentinel enabled | [07-sentinel-enabled.png](screenshots/07-sentinel-enabled.png) |
+| Syslog via AMA connector | [08-syslog-via-ama-connector.png](screenshots/08-syslog-via-ama-connector.png) |
+| Data Collection Rule | [09-data-collection-rule.png](screenshots/09-data-collection-rule.png) |
+| Sentinel Syslog query | [10-sentinel-syslog-query.png](screenshots/10-sentinel-syslog-query.png) |
+| Attacker IP summary | [11-attacker-ip-summary-kql.png](screenshots/11-attacker-ip-summary-kql.png) |
+| Attack map | [12-sentinel-ssh-attack-map.png](screenshots/12-sentinel-ssh-attack-map.png) |
 
 ## Security Considerations
 
